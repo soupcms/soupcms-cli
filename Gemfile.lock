@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    soupcms-cli (0.5.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    thor (0.18.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  soupcms-cli!
+  thor
