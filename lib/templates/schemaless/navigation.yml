@@ -3,7 +3,7 @@
 
   logo:
     font_icon: fa fa-magic
-    text: "<%= configs[:description] %>"
+    text: "<%= configs[:display_name] %>"
     link:
       url: home
 

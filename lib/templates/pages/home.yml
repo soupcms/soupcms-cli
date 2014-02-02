@@ -1,6 +1,6 @@
 ---
   slug: home
-  title: <%= configs[:description] %> - <%= configs[:name] %>
+  title: <%= configs[:description] %> - <%= configs[:display_name] %>
   seo:
     description: <%= configs[:description] %>
   areas:

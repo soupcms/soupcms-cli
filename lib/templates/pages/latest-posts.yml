@@ -1,24 +1,12 @@
 ---
   slug: blog-latest
-  title: Latest blog posts on <%= configs[:description] %>
+  title: Latest blog posts on <%= configs[:display_name] %>
   seo:
-    description: Latest blog posts on <%= configs[:description] %>
+    description: Latest blog posts on <%= configs[:display_name] %>
   layout:
     type: slim
     name: bootstrap/full-width
   areas:
-    -
-      name: header
-      modules:
-        -
-          recipes:
-            -
-              type: soupcms-api
-              url: /schemaless/name/navigation
-              return: navigation
-          template:
-            type: slim
-            name: bootstrap/navigation
     -
       name: body
       modules:

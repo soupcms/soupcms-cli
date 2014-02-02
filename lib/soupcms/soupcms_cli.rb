@@ -18,7 +18,9 @@ class SoupCMSCLI < Thor
   method_option :generate, type: :boolean, aliases: '-g', default: false, desc: 'Generate NEW soupcms application. Default is false.'
   def new(name)
     configs[:name] = name
-    configs[:description] = ask('Description? :', :green)
+    configs[:display_name] = ask('Short display application name? (10 to 15 char) :', :green)
+    configs[:description] = ask('Long application description? (30 to 40 char) :', :green)
+
     configs[:blog] = yes?('Blog support? (y/n):', :green)
     if configs[:blog]
       say('Choose blog layout?',:green)
