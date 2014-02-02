@@ -3,7 +3,7 @@
     name: enricher
   layout:
     type: slim
-    name: bootstrap/sidebar
+    name: bootstrap/<%= configs[:blog_layout] %>
   areas:
     -
       name: meta

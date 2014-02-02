@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'thor'
 require 'yaml'
 require 'json'
@@ -41,6 +42,14 @@ class SoupCMSCLI < Thor
     template 'lib/templates/pages/home.yml',"data/#{name}/pages/home.yml"
     template 'lib/templates/pages/about.md',"data/#{name}/pages/about.md"
     template 'lib/templates/pages/contact-us.md',"data/#{name}/pages/contact-us.md"
+
+    template 'lib/templates/single-app-config.ru', 'config.ru'
+    template 'lib/templates/Gemfile', 'Gemfile'
+  end
+
+  desc 'delete <name>', 'delete application'
+  def delete(name)
+    remove_dir "data/#{name}" if yes?('Are you sure?')
   end
 
   desc 'clean <name>', 'clean all content from database'
