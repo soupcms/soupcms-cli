@@ -9,5 +9,3 @@ class SoupCMSCLI < Thor
 
 end
 
-
-SoupCMSCLI.start
