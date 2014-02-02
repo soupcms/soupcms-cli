@@ -1,0 +1,20 @@
+---
+  name: footer
+
+  copyright: "Copyright &copy; <%= Time.now.year %>"    # update or remove
+  links: 
+    - 
+      label: About
+      link:
+        url: about
+    - 
+      label: Contact Us
+      link:
+        url: contact-us
+      font_icon: fa fa-envelope-o
+    <% if configs[:blog] %>
+    -
+      label: Blog
+      link:
+        url: blog
+    <% end %>

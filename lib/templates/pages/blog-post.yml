@@ -1,0 +1,79 @@
+---
+  meta: 
+    model: posts
+  areas: 
+    - 
+      name: sidebar
+      modules: 
+        - 
+          recipes: 
+            - 
+              type: http
+              url: "#{context.application.soupcms_api_url}/schemaless/name/social-toolbar"
+              return: social-toolbar
+          template: 
+            type: slim
+            name: bootstrap/social-toolbar
+        - 
+          recipes: 
+            - 
+              type: soupcms-api
+              model: "/#{context.model_name}/slug/#{context.slug}"
+              return: toc-document
+            - 
+              type: post-processor
+              processor: SoupCMS::Core::Processor::NokogiriTOC
+              config: 
+                toc_for: "#{data['toc-document']['content']['value']}"
+                levels: 
+                  - h2
+                  - h3
+                  - h4
+                  - h5
+                  - h6
+              return: table-of-content
+          template: 
+            type: slim
+            name: bootstrap/table-of-content
+            config: 
+              title: Contents
+        - 
+          recipes: 
+            - 
+              type: soupcms-api
+              url: posts/tag-cloud
+              return: tag-cloud
+          template: 
+            type: slim
+            name: bootstrap/tag-cloud
+        - 
+          recipes: 
+            - 
+              type: soupcms-api
+              model: posts
+              fields: 
+                - title
+                - slug
+              limit: 5
+              return: articles
+          template: 
+            type: slim
+            name: bootstrap/list-view
+            config: 
+              title: Recent Posts
+    - 
+      name: body
+      modules: 
+        - 
+          recipes: 
+            - 
+              type: soupcms-api
+              model: "/#{context.model_name}/slug/#{context.slug}"
+              return: article
+          template: 
+            type: slim
+            name: bootstrap/article
+        - 
+          template: 
+            type: slim
+            name: meta/disqus

@@ -1,5 +1,5 @@
 ---
-# blog post attributes, few example given below
+# blog post attributes in front matter format
 tags: [tag1]
 title: Post title (optional) if not defined first line is considered as post title
 ---

@@ -1,0 +1,29 @@
+---
+  name: navigation
+
+  logo:
+    font_icon: fa fa-magic
+    text: "<%= configs[:description] %>"
+    link:
+      url: home
+
+  menu:
+
+    <% if configs[:blog] %>
+    left:
+      -
+        label: Blog
+        link:
+          url: blog
+    <% end %>
+
+    right:
+      -
+        label: Contact Us
+        link:
+          url: contact-us
+        font_icon: fa fa-envelope-o
+      -
+        label: About
+        link:
+          url: about

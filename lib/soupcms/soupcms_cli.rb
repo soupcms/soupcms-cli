@@ -6,24 +6,41 @@ require 'mongo'
 class SoupCMSCLI < Thor
   include Thor::Actions
 
+  def initialize(*args)
+    super
+    @configs = {}
+  end
+
+  attr_reader :configs
+
   desc 'new <name>', 'create new application'
   method_option :generate, type: :boolean, aliases: '-g', default: false, desc: 'Generate NEW soupcms application. Default is false.'
   def new(name)
-    configs = {}
+    configs[:name] = name
+    configs[:description] = ask('Description? :', :green)
     configs[:blog] = yes?('Blog support? (y/n):', :green)
     if configs[:blog]
       say('Choose blog layout?',:green)
       blog_layouts = [[1, 'full-width'], [2, 'right-sidebar'], [3, 'left-sidebar']]
       print_table blog_layouts
-      layout = ask('layout? :', :limited_to => %w(1 2 3))
+      layout = ask('choose from', :green, :limited_to => %w(1 2 3))
       configs[:blog_layout] = blog_layouts[layout.to_i - 1][1]
     end
 
     create_file "data/#{name}/_config.yml", YAML.dump(JSON.parse(configs.to_json))
     if configs[:blog]
-      template 'lib/templates/my_first_post.tt',"data/#{name}/posts/my_first_post.md"
+      template 'lib/templates/blog/my_first_post.md',"data/#{name}/posts/my_first_post.md"
+      template 'lib/templates/pages/blog-post.yml',"data/#{name}/pages/blog-post.yml"
+      template 'lib/templates/pages/latest-posts.yml',"data/#{name}/pages/latest-posts.yml"
     end
+    template 'lib/templates/schemaless/footer.yml',"data/#{name}/schemaless/footer.yml"
+    template 'lib/templates/schemaless/navigation.yml',"data/#{name}/schemaless/navigation.yml"
+    template 'lib/templates/schemaless/social-toolbar.yml',"data/#{name}/schemaless/social-toolbar.yml"
 
+    template 'lib/templates/pages/default.yml',"data/#{name}/pages/default.yml"
+    template 'lib/templates/pages/home.yml',"data/#{name}/pages/home.yml"
+    template 'lib/templates/pages/about.md',"data/#{name}/pages/about.md"
+    template 'lib/templates/pages/contact-us.md',"data/#{name}/pages/contact-us.md"
   end
 
   desc 'clean <name>', 'clean all content from database'
@@ -43,14 +60,15 @@ class SoupCMSCLI < Thor
   desc 'seed <name>', 'seed content to database'
   method_option :clean, type: :boolean, aliases: '-c', default: false, desc: 'Clean all documents before seed.'
   def seed(name)
+    clean(name) if options.clean?
     Dir.glob("data/#{name}/**/*.{json,md,yml}").each do |file|
       unless file.include?('ref_files') || file.include?('_config.yml')
         begin
           SoupCMS::CLI::Model::Base.create_model(File.new(file))
         rescue => e
-          puts "Error importing file... #{file}"
-          puts "#{e.backtrace.first}: #{e.message} (#{e.class})"
-          puts "#{e.backtrace.drop(1).map{|s| s }.join("\n")}"
+          say "Error importing file... #{file}", :red
+          say "#{e.backtrace.first}: #{e.message} (#{e.class})", :red
+          say "#{e.backtrace.drop(1).map{|s| s }.join("\n")}", :red
         end
       end
     end

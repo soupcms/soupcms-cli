@@ -1,0 +1,77 @@
+---
+  meta:
+    name: enricher
+  layout:
+    type: slim
+    name: bootstrap/sidebar
+  areas:
+    -
+      name: meta
+      modules:
+        -
+          template:
+            type: slim
+            name: meta/page-title
+    -
+      name: header
+      modules:
+        -
+          recipes:
+            -
+              type: http
+              url: "#{context.application.soupcms_api_url}/schemaless/name/navigation"
+              return: navigation
+          template:
+            type: slim
+            name: bootstrap/navigation
+        -
+          recipes:
+            -
+              type: inline
+              data:
+                title: <%= configs[:name] %>
+                image:
+                  source: cloudinary
+                  base_url: http://res.cloudinary.com/sunitparekh/image/upload
+                  desktop: purple-textures-low_xiamgc.jpg
+              return: page-header
+          template:
+            type: slim
+            name: bootstrap/page-header
+    -
+      name: sidebar
+      modules:
+        -
+          recipes:
+            -
+              type: http
+              url: "#{context.application.soupcms_api_url}/schemaless/name/social-toolbar"
+              return: social-toolbar
+          template:
+            type: slim
+            name: bootstrap/social-toolbar
+        -
+          recipes:
+            -
+              type: soupcms-api
+              url: posts/tag-cloud
+              return: tag-cloud
+          template:
+            type: slim
+            name: bootstrap/tag-cloud
+    -
+      name: footer
+      modules:
+        -
+          recipes:
+            -
+              type: http
+              url: "#{context.application.soupcms_api_url}/schemaless/name/footer"
+              return: footer
+          template:
+            type: slim
+            name: bootstrap/footer
+        -
+          template:
+            type: slim
+            name: meta/analytics/google
