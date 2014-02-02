@@ -29,7 +29,7 @@
             -
               type: inline
               data:
-                title: <%= configs[:name] %>
+                title: <%= configs[:description] %>
                 image:
                   source: cloudinary
                   base_url: http://res.cloudinary.com/sunitparekh/image/upload

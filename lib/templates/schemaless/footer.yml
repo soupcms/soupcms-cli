@@ -16,5 +16,5 @@
     -
       label: Blog
       link:
-        url: blog
+        url: blog-latest
     <% end %>

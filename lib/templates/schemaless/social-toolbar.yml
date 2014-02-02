@@ -1,8 +1,8 @@
 ---
   name: social-toolbar
 
-  twitter: http://www.twitter.com/#{name}           # update or remove if not needed
-  plus: https://plus.google.com/#{name}             # update or remove if not needed
-  github: https://www.github.com/#{name}            # update or remove if not needed
-  youtube: http://www.youtube.com/user/#{name}      # update or remove if not needed
-  plus: https://plus.google.com/+#{name}            # update or remove if not needed
+  twitter: http://www.twitter.com/<%= configs[:name] %>           # update or remove if not needed
+  plus: https://plus.google.com/<%= configs[:name] %>             # update or remove if not needed
+  github: https://www.github.com/<%= configs[:name] %>            # update or remove if not needed
+  youtube: http://www.youtube.com/user/<%= configs[:name] %>      # update or remove if not needed
+  plus: https://plus.google.com/+<%= configs[:name] %>            # update or remove if not needed

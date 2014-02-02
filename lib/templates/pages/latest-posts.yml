@@ -1,4 +1,5 @@
 ---
+  slug: blog-latest
   title: Latest blog posts on <%= configs[:description] %>
   seo:
     description: Latest blog posts on <%= configs[:description] %>
