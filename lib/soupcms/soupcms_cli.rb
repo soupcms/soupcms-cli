@@ -47,6 +47,7 @@ class SoupCMSCLI < Thor
 
     template 'lib/templates/single-app-config.ru', 'config.ru'
     template 'lib/templates/Gemfile', 'Gemfile'
+    template 'lib/templates/Procfile', 'Procfile'
   end
 
   desc 'delete <name>', 'delete application'
