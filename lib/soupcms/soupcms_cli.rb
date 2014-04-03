@@ -35,6 +35,10 @@ class SoupCMSCLI < Thor
       template 'lib/templates/blog/my_first_post.md',"data/#{name}/posts/my_first_post.md"
       template 'lib/templates/pages/blog-post.yml',"data/#{name}/pages/blog-post.yml"
       template 'lib/templates/pages/latest-posts.yml',"data/#{name}/pages/latest-posts.yml"
+
+      template 'lib/templates/public/favicon.png', 'public/favicon.png'
+      template 'lib/templates/public/blog/posts/images/my-first-post.png',"public/#{name}/posts/images/my-first-post.png"
+      template 'lib/templates/public/blog/posts/images/my-first-post/1-post-image.png',"public/#{name}/posts/images/my-first-post/1-post-image.png"
     end
     template 'lib/templates/schemaless/footer.yml',"data/#{name}/schemaless/footer.yml"
     template 'lib/templates/schemaless/navigation.yml',"data/#{name}/schemaless/navigation.yml"
@@ -48,6 +52,8 @@ class SoupCMSCLI < Thor
     template 'lib/templates/single-app-config.ru', 'config.ru'
     template 'lib/templates/Gemfile', 'Gemfile'
     template 'lib/templates/Procfile', 'Procfile'
+
+
   end
 
   desc 'delete <name>', 'delete application'
