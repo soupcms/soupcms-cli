@@ -90,7 +90,7 @@ module SoupCMS
         end
 
         def update_old_doc
-          coll.update({'_id' => old_doc['_id']}, {'$set' => {'latest' => false}}) unless old_doc.empty?
+          coll.update({'_id' => old_doc['_id']}, {'$set' => {'latest' => false, 'state' => 'published_archive'}}) unless old_doc.empty?
         end
 
         def build

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    soupcms-cli (0.5.0)
+    soupcms-cli (0.5.1)
       bson_ext (~> 1.9)
       mongo (~> 1.9)
       thor (~> 0.18)
