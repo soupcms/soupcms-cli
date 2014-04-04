@@ -21,7 +21,7 @@ class SoupCMSCLI < Thor
     configs[:display_name] = ask('Short display application name? (10 to 15 char) :', :green)
     configs[:description] = ask('Long application description? (30 to 40 char) :', :green)
 
-    configs[:blog] = yes?('Blog support? (y/n):', :green)
+    configs[:blog] = yes?('Blog support?:', :green)
     if configs[:blog]
       say('Choose blog layout?',:green)
       blog_layouts = [[1, 'full-width'], [2, 'right-sidebar'], [3, 'left-sidebar']]
@@ -51,7 +51,7 @@ class SoupCMSCLI < Thor
     template 'lib/templates/Procfile', 'Procfile'
 
     if configs[:blog]
-      while yes?('Would you like to add blog post? (y/n):', :green)
+      while yes?('Would you like to add blog post?:', :green)
         post(configs[:name])
       end
     end

@@ -31,7 +31,7 @@ module SoupCMS
           end
         end
 
-        SEVERITY_COLOR_MAP = { 'INFO' => :green,'DEBUG' => :white}
+        SEVERITY_COLOR_MAP = { 'INFO' => :green,'DEBUG' => :yellow}
         def initialize(file);
           @file = file;
           @logger = Logger.new(STDOUT)
@@ -78,7 +78,7 @@ module SoupCMS
         end
 
         def hero_image
-          image_path = File.join(File.dirname(__FILE__), '../../../../public', app_name, model, "images/#{doc_name}.*")
+          image_path = File.join('public', app_name, model, "images/#{doc_name}.*")
           hero_image = Dir.glob(image_path).to_a
           return File.join('/assets', app_name, model, 'images', File.basename(hero_image[0])) unless hero_image.empty?
         end
