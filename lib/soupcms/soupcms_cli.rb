@@ -92,8 +92,10 @@ class SoupCMSCLI < Thor
 
   desc 'seed <name>', 'seed content to database'
   method_option :clean, type: :boolean, aliases: '-c', default: false, desc: 'Clean all documents before seed.'
+  method_option :verbose, type: :boolean, aliases: '-d', default: false, desc: 'Show verbose/debug information during seed.'
   def seed(name)
     clean(name) if options.clean?
+    ENV['verbose'] = options.verbose?.to_s
     Dir.glob("data/#{name}/**/*.{json,md,yml}").each do |file|
       unless file.include?('ref_files') || file.include?('_config.yml')
         begin

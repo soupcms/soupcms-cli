@@ -1,6 +1,7 @@
 require 'yaml'
 require 'mongo'
 require 'json'
+require 'logger'
 
 module SoupCMS
   module CLI
@@ -30,8 +31,13 @@ module SoupCMS
           end
         end
 
-        def initialize(file)
-          ; @file = file;
+        def initialize(file);
+          @file = file;
+          @logger = Logger.new(STDOUT)
+          @logger.level = ENV['verbose'] == 'true' ? Logger::DEBUG : Logger::INFO
+          @logger.formatter = proc do |severity, datetime, progname, msg|
+            "#{severity}: #{msg}\n"
+          end
         end
 
         attr_reader :file
@@ -117,10 +123,10 @@ module SoupCMS
         def create
           build
           if doc['publish_datetime'] == old_doc['publish_datetime']
-            #puts "Skipping document #{file}, since no changes"
+            @logger.debug "Skipping document '#{file.path}' since no changes"
           else
-            puts "Inserting document #{file.path}"
-            puts "*** document: #{doc['doc_id']} ***:\n #{JSON.pretty_generate(doc)}"
+            @logger.info "Inserting document '#{file.path}'"
+            @logger.debug "\n #{JSON.pretty_generate(doc)}"
             coll.insert(doc)
             update_old_doc
           end
