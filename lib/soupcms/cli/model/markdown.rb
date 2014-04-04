@@ -10,19 +10,17 @@ module SoupCMS
 
         def parse_file
           @attributes, @content = SoupCMS::CLI::FrontMatterParser.new.parse(file.read)
-          {'content' => {'type' => 'markdown', 'flavor' => content_flavor, 'value' => @content}}
+          doc = {'content' => {'type' => 'markdown', 'flavor' => content_flavor, 'value' => @content}}
+          doc.merge @attributes
         end
 
         def build
           super
-          doc.merge! @attributes if @attributes
-          doc['title'] = title
-          doc['description'] = description
+          doc['title'] = title unless doc['title']
+          doc['description'] = description unless doc['description']
         end
 
         def title
-          return doc['title'] if doc['title']
-
           content_lines = doc['content']['value'].lines
           doc_title = content_lines.first.chomp
           doc['content']['value'] = content_lines[2] ? content_lines[2..-1].join("\n") : ''
@@ -30,7 +28,6 @@ module SoupCMS
         end
 
         def description
-          return doc['description'] if doc['description']
           post_description = ''
           content_lines = doc['content']['value'].lines
           index = 0

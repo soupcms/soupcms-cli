@@ -97,7 +97,11 @@ module SoupCMS
           doc['doc_id'] = doc_name unless doc['doc_id']
 
           timestamp = file.mtime.to_i
+
           doc['publish_datetime'] = timestamp unless doc['publish_datetime']
+          if doc['publish_datetime'].class == Time
+            doc['publish_datetime'] = doc['publish_datetime'].to_i
+          end
           doc['version'] = timestamp unless doc['version']
           doc['locale'] = 'en_US' unless doc['locale']
           doc['create_datetime'] = (old_doc.empty? ? timestamp : old_doc['create_datetime'])
@@ -116,6 +120,7 @@ module SoupCMS
             #puts "Skipping document #{file}, since no changes"
           else
             puts "Inserting document #{file.path}"
+            puts "*** document: #{doc['doc_id']} ***:\n #{JSON.pretty_generate(doc)}"
             coll.insert(doc)
             update_old_doc
           end
