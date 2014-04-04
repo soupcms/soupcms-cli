@@ -2,6 +2,7 @@ require 'soupcms/cli/version'
 
 require 'soupcms/soupcms_cli'
 
+require 'soupcms/cli/colorize'
 require 'soupcms/cli/front_matter_parser'
 require 'soupcms/cli/resolve_file_reference'
 

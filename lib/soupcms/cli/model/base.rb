@@ -31,12 +31,13 @@ module SoupCMS
           end
         end
 
+        SEVERITY_COLOR_MAP = { 'INFO' => :green,'DEBUG' => :white}
         def initialize(file);
           @file = file;
           @logger = Logger.new(STDOUT)
           @logger.level = ENV['verbose'] == 'true' ? Logger::DEBUG : Logger::INFO
           @logger.formatter = proc do |severity, datetime, progname, msg|
-            "#{severity}: #{msg}\n"
+            "#{severity}: #{msg}\n".colorize(SEVERITY_COLOR_MAP[severity] || :red)
           end
         end
 
