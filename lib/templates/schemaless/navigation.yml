@@ -12,18 +12,14 @@
     <% if configs[:blog] %>
     left:
       -
-        label: Blog
+        label: Latest posts
         link:
           url: blog-latest
     <% end %>
 
     right:
       -
-        label: Contact Us
-        link:
-          url: contact-us
-        font_icon: fa fa-envelope-o
-      -
         label: About
         link:
           url: about
+        font_icon: fa fa-user

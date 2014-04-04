@@ -73,7 +73,10 @@ class SoupCMSCLI < Thor
 
   desc 'delete <name>', 'delete application'
   def delete(name)
-    remove_dir "data/#{name}" if yes?('Are you sure?')
+    if yes?("Are you sure you would like to delete #{name}?")
+      remove_dir "data/#{name}"
+      remove_dir "public/#{name}"
+    end
   end
 
   desc 'clean <name>', 'clean all content from database'
@@ -92,7 +95,7 @@ class SoupCMSCLI < Thor
 
   desc 'seed <name>', 'seed content to database'
   method_option :clean, type: :boolean, aliases: '-c', default: false, desc: 'Clean all documents before seed.'
-  method_option :verbose, type: :boolean, aliases: '-d', default: false, desc: 'Show verbose/debug information during seed.'
+  method_option :verbose, type: :boolean, aliases: '-v', default: false, desc: 'Show verbose information during seed (debug level logs).'
   def seed(name)
     clean(name) if options.clean?
     ENV['verbose'] = options.verbose?.to_s

@@ -1,20 +1,9 @@
 ---
   name: footer
 
-  copyright: "Copyright &copy; <%= Time.now.year %>"    # update or remove
+  copyright: "&copy; 2014"
   links: 
     - 
-      label: About
+      label: Powered by soupCMS
       link:
-        url: about
-    - 
-      label: Contact Us
-      link:
-        url: contact-us
-      font_icon: fa fa-envelope-o
-    <% if configs[:blog] %>
-    -
-      label: Blog
-      link:
-        url: blog-latest
-    <% end %>
+        url: http://www.soupcms.com
