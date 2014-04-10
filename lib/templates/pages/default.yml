@@ -18,8 +18,10 @@
         -
           recipes:
             -
-              type: http
-              url: "#{context.application.soupcms_api_url}/schemaless/name/navigation"
+              type: soupcms-api
+              model: schemaless
+              match:
+                name: navigation
               return: navigation
           template:
             type: slim
@@ -66,8 +68,10 @@
         -
           recipes:
             -
-              type: http
-              url: "#{context.application.soupcms_api_url}/schemaless/name/footer"
+              type: soupcms-api
+              model: schemaless
+              match:
+                name: footer
               return: footer
           template:
             type: slim
