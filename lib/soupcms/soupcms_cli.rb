@@ -21,9 +21,9 @@ class SoupCMSCLI < Thor
     configs[:display_name] = ask('Short display application name? (10 to 15 char) :', :green)
     configs[:description] = ask('Long application description? (30 to 40 char) :', :green)
 
-    configs[:blog] = yes?('Blog support?:', :green)
+    configs[:blog] = yes?('Blog support? (y/n):', :green)
     if configs[:blog]
-      say('Choose blog layout?',:green)
+      say('Choose blog layout? (y/n):',:green)
       blog_layouts = [[1, 'full-width'], [2, 'right-sidebar'], [3, 'left-sidebar']]
       print_table blog_layouts
       layout = ask('choose from', :green, :limited_to => %w(1 2 3))
@@ -44,14 +44,13 @@ class SoupCMSCLI < Thor
     template 'lib/templates/pages/default.yml',"data/#{name}/pages/default.yml"
     template 'lib/templates/pages/home.yml',"data/#{name}/pages/home.yml"
     template 'lib/templates/pages/about.md',"data/#{name}/pages/about.md"
-    template 'lib/templates/pages/contact-us.md',"data/#{name}/pages/contact-us.md"
 
     template 'lib/templates/single-app-config.ru', 'config.ru'
     template 'lib/templates/Gemfile', 'Gemfile'
     template 'lib/templates/Procfile', 'Procfile'
 
     if configs[:blog]
-      while yes?('Would you like to add blog post?:', :green)
+      while yes?('Would you like to add blog post? (y/n):', :green)
         post(configs[:name])
       end
     end
@@ -63,7 +62,7 @@ class SoupCMSCLI < Thor
     configs[:title] = ask('Title for the new post? (20 to 30 char) :', :green)
     sanitize_title = configs[:title].gsub(' ','-').gsub('\'','').gsub(',','').downcase   #TODO: proper sanitization
     configs[:sanitize_title] = sanitize_title
-    tags = ask('Tags as comma separated list?  :', :green)
+    tags = ask('Tags as comma separated list:', :green)
     configs[:tags] = tags.split(',')
 
     template 'lib/templates/blog/my-first-post.md',"data/#{name}/posts/#{sanitize_title}.md"
