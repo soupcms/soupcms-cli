@@ -14,7 +14,7 @@
       -
         label: Latest posts
         link:
-          url: blog-latest
+          url: posts
     <% end %>
 
     right:

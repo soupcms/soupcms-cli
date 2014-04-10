@@ -1,5 +1,5 @@
 ---
-  slug: blog-latest
+  slug: posts
   title: Latest blog posts on <%= configs[:display_name] %>
   seo:
     description: Latest blog posts on <%= configs[:display_name] %>
@@ -15,6 +15,8 @@
             -
               type: soupcms-api
               model: posts
+              match:
+                tags: "#{page.context.params['tags']}"
               return: articles
           template:
             type: slim

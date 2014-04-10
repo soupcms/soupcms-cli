@@ -33,7 +33,7 @@ class SoupCMSCLI < Thor
     create_file "data/#{name}/_config.yml", YAML.dump(JSON.parse(configs.to_json))
     if configs[:blog]
       template 'lib/templates/pages/blog-post.yml',"data/#{name}/pages/blog-post.yml"
-      template 'lib/templates/pages/latest-posts.yml',"data/#{name}/pages/latest-posts.yml"
+      template 'lib/templates/pages/posts.yml',"data/#{name}/pages/posts.yml"
     end
     copy_file 'lib/templates/public/favicon.png', 'public/favicon.png'
 
