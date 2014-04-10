@@ -105,25 +105,27 @@ module SoupCMS
 
           timestamp = file.mtime.to_i
 
-          doc['publish_datetime'] = timestamp unless doc['publish_datetime']
-          if doc['publish_datetime'].class == Time
-            doc['publish_datetime'] = doc['publish_datetime'].to_i
-          end
+          doc['publish_datetime'] = doc['publish_datetime'].to_i || timestamp
           doc['version'] = timestamp unless doc['version']
           doc['locale'] = 'en_US' unless doc['locale']
+          doc['update_datetime'] = timestamp
           doc['create_datetime'] = (old_doc.empty? ? timestamp : old_doc['create_datetime'])
           doc['create_by'] = 'seed' unless doc['create_by']
 
-          doc['state'] = 'published' unless doc['state']
+          doc['state'] = publish_in_future? ? 'draft' : 'published' unless doc['state']
           doc['latest'] = true unless doc['latest']
 
           doc['slug'] = slug unless doc['slug']
           doc['hero_image'] = {'url' => hero_image} if hero_image
         end
 
+        def publish_in_future?
+          doc['publish_datetime'] > Time.now.to_i
+        end
+
         def create
           build
-          if doc['publish_datetime'] == old_doc['publish_datetime']
+          if doc['update_datetime'] == old_doc['update_datetime']
             @logger.debug "Skipping document '#{file.path}' since no changes"
           else
             @logger.info "Inserting document '#{file.path}'"
