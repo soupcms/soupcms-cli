@@ -2,6 +2,7 @@
 # blog post attributes in front matter format
 tags: [<%= configs[:tags].join(",") %>]
 title: <%= configs[:title] %>
+publish_datetime: 2014-01-01T00:00:07.0Z
 description: Write post description here...
 ---
 

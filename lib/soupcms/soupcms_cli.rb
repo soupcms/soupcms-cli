@@ -21,7 +21,7 @@ class SoupCMSCLI < Thor
     configs[:display_name] = ask('Short display application name? (10 to 15 char) :', :green)
     configs[:description] = ask('Long application description? (30 to 40 char) :', :green)
 
-    configs[:blog] = yes?('Blog support? (y/n):', :green)
+    configs[:blog] = yes?('Blog support? (y/n):', :blue)
     if configs[:blog]
       say('Choose blog layout? (y/n):',:green)
       blog_layouts = [[1, 'full-width'], [2, 'right-sidebar'], [3, 'left-sidebar']]
@@ -30,7 +30,6 @@ class SoupCMSCLI < Thor
       configs[:blog_layout] = blog_layouts[layout.to_i - 1][1]
     end
 
-    create_file "data/#{name}/_config.yml", YAML.dump(JSON.parse(configs.to_json))
     if configs[:blog]
       template 'lib/templates/pages/blog-post.yml',"data/#{name}/pages/blog-post.yml"
       template 'lib/templates/pages/posts.yml',"data/#{name}/pages/posts.yml"
@@ -45,15 +44,22 @@ class SoupCMSCLI < Thor
     template 'lib/templates/pages/home.yml',"data/#{name}/pages/home.yml"
     template 'lib/templates/pages/about.md',"data/#{name}/pages/about.md"
 
-    template 'lib/templates/single-app-config.ru', 'config.ru'
     template 'lib/templates/Gemfile', 'Gemfile'
     template 'lib/templates/Procfile', 'Procfile'
 
+    if yes?('Would you like to host your website public on platform like Heroku? (y/n):', :blue)
+      configs[:site_name] = ask('Provide the hostname for your website (e.g. http://myblog.herokuapp.com OR http://www.myblog.com) :', :green)
+    end
+    template 'lib/templates/single-app-config.ru', 'config.ru'
+
     if configs[:blog]
-      while yes?('Would you like to add blog post? (y/n):', :green)
+      while yes?('Would you like to add blog post? (y/n):', :blue)
         post(configs[:name])
       end
     end
+
+
+    create_file "data/#{name}/_config.yml", YAML.dump(JSON.parse(configs.to_json))
   end
 
   desc 'post <application-name>', 'create new post for given application name'
@@ -72,9 +78,11 @@ class SoupCMSCLI < Thor
 
   desc 'delete <name>', 'delete application'
   def delete(name)
-    if yes?("Are you sure you would like to delete #{name}?")
+    if yes?("Are you sure you would like to delete #{name}? (y/n):")
       remove_dir "data/#{name}"
       remove_dir "public/#{name}"
+      remove_file 'Procfile'
+      remove_file 'config.ru'
     end
   end
 
