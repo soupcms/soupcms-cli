@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['parekh.sunit@gmail.com']
   spec.summary       = %q{soupCMS command line interpreter}
   spec.description   = %q{soupCMS command line interpreter for generating new application and applying updates}
-  spec.homepage      = 'http://www.soupcms.com'
+  spec.homepage      = 'http://blog.soupcms.com/posts/setup-blog-site'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
