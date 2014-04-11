@@ -62,7 +62,7 @@ class SoupCMSCLI < Thor
     create_file "data/#{name}/_config.yml", YAML.dump(JSON.parse(configs.to_json))
   end
 
-  desc 'post <application-name>', 'create new post for given application name'
+  desc 'post <name>', 'create new post for given application name'
   def post(name)
     configs[:name] = name
     configs[:title] = ask('Title for the new post? (20 to 30 char) :', :green)
