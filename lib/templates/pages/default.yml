@@ -33,10 +33,6 @@
               data:
                 title: <%= configs[:display_name] %>
                 sub_headline: <%= configs[:description] %>
-                image:
-                  source: cloudinary
-                  base_url: http://res.cloudinary.com/sunitparekh/image/upload
-                  desktop: purple-textures-low_xiamgc.jpg
               return: page-header
           template:
             type: slim
