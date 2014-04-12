@@ -47,6 +47,7 @@ class SoupCMSCLI < Thor
 
     template 'lib/templates/Gemfile', 'Gemfile'
     template 'lib/templates/Procfile', 'Procfile'
+    template 'lib/templates/.gitignore', '.gitignore'
 
     if yes?('Would you like to host your website public on platform like Heroku? (y/n):', :blue)
       configs[:site_name] = ask('Provide the hostname for your website (e.g. http://myblog.herokuapp.com OR http://www.myblog.com) :', :green)
