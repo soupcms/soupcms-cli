@@ -35,6 +35,7 @@ class SoupCMSCLI < Thor
       template 'lib/templates/pages/posts.yml',"data/#{name}/pages/posts.yml"
     end
     copy_file 'lib/templates/public/favicon.png', 'public/favicon.png'
+    copy_file 'lib/templates/public/common/stylesheets/_custom-variables.scss', 'public/common/stylesheets/_custom-variables.scss'
 
     template 'lib/templates/schemaless/footer.yml',"data/#{name}/schemaless/footer.yml"
     template 'lib/templates/schemaless/navigation.yml',"data/#{name}/schemaless/navigation.yml"
