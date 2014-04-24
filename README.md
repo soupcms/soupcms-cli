@@ -7,5 +7,14 @@ soupCMS is still in alpha and experiment stage. So please use it with caution. I
 [Hosting soupCMS](http://blog.soupcms.com/posts/deploying-on-heroku) for more details on how to host your website built using soupCMS.
 
 
+# Release
+
+## v0.5.3  (24 April, 2014)
+
+- fixed issue with generating config.ru without hosting support
+- by default now new application creates new directory, use '-t' option to skip top level directory
+
+
+
 
 
