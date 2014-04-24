@@ -15,6 +15,9 @@ SoupCMS::Common::Strategy::Application::SingleApp.configure do |app|
     app.soupcms_api_url = 'http://localhost:9292/api'
     app.app_base_url = 'http://localhost:9292/'
   end
+  <%- else %>
+  app.soupcms_api_url = 'http://localhost:9292/api'
+  app.app_base_url = 'http://localhost:9292/'
   <%- end %>
 end
 

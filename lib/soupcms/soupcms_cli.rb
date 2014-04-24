@@ -15,13 +15,18 @@ class SoupCMSCLI < Thor
   attr_reader :configs
 
   desc 'new <name>', 'create new application'
+  method_option :skip_dir, type: :boolean, aliases: '-t', default: false, desc: 'Skip top level directory for application.'
   method_option :generate, type: :boolean, aliases: '-g', default: false, desc: 'Generate NEW soupcms application. Default is false.'
   def new(name)
     configs[:name] = name
     configs[:display_name] = ask('Short display application name? (10 to 15 char) :', :green)
     configs[:description] = ask('Long application description? (30 to 40 char) :', :green)
 
-    configs[:blog] = yes?('Blog support? (y/n):', :blue)
+    if yes?('Would you like to host your website public on platform like Heroku? (y/n):', :cyan)
+      configs[:site_name] = ask('Provide the hostname for your website (e.g. http://myblog.herokuapp.com OR http://www.myblog.com) :', :green)
+    end
+
+    configs[:blog] = yes?('Blog support? (y/n):', :cyan)
     if configs[:blog]
       say('Choose blog layout? (y/n):',:green)
       blog_layouts = [[1, 'full-width'], [2, 'right-sidebar'], [3, 'left-sidebar']]
@@ -30,42 +35,41 @@ class SoupCMSCLI < Thor
       configs[:blog_layout] = blog_layouts[layout.to_i - 1][1]
     end
 
+    top_dir = options.skip_dir? ? '.' : name
+    data_folder = "#{top_dir}/data/#{name}"
     if configs[:blog]
-      template 'lib/templates/pages/blog-post.yml',"data/#{name}/pages/blog-post.yml"
-      template 'lib/templates/pages/posts.yml',"data/#{name}/pages/posts.yml"
+      template 'lib/templates/pages/blog-post.yml',"#{data_folder}/pages/blog-post.yml"
+      template 'lib/templates/pages/posts.yml',"#{data_folder}/pages/posts.yml"
     end
-    copy_file 'lib/templates/public/favicon.png', 'public/favicon.png'
-    copy_file 'lib/templates/public/common/stylesheets/_custom-variables.scss', 'public/common/stylesheets/_custom-variables.scss'
+    copy_file 'lib/templates/public/favicon.png', "#{top_dir}/public/favicon.png"
+    copy_file 'lib/templates/public/common/stylesheets/_custom-variables.scss', "#{top_dir}/public/common/stylesheets/_custom-variables.scss"
 
-    template 'lib/templates/schemaless/footer.yml',"data/#{name}/schemaless/footer.yml"
-    template 'lib/templates/schemaless/navigation.yml',"data/#{name}/schemaless/navigation.yml"
-    template 'lib/templates/schemaless/social-toolbar.yml',"data/#{name}/schemaless/social-toolbar.yml"
+    template 'lib/templates/schemaless/footer.yml',"#{data_folder}/schemaless/footer.yml"
+    template 'lib/templates/schemaless/navigation.yml',"#{data_folder}/schemaless/navigation.yml"
+    template 'lib/templates/schemaless/social-toolbar.yml',"#{data_folder}/schemaless/social-toolbar.yml"
 
-    template 'lib/templates/pages/default.yml',"data/#{name}/pages/default.yml"
-    template 'lib/templates/pages/home.yml',"data/#{name}/pages/home.yml"
-    template 'lib/templates/pages/about.md',"data/#{name}/pages/about.md"
+    template 'lib/templates/pages/default.yml',"#{data_folder}/pages/default.yml"
+    template 'lib/templates/pages/home.yml',"#{data_folder}/pages/home.yml"
+    template 'lib/templates/pages/about.md',"#{data_folder}/pages/about.md"
 
-    template 'lib/templates/Gemfile', 'Gemfile'
-    template 'lib/templates/Procfile', 'Procfile'
-    template 'lib/templates/.gitignore', '.gitignore'
+    template 'lib/templates/Gemfile', "#{top_dir}/Gemfile"
+    template 'lib/templates/Procfile', "#{top_dir}/Procfile"
+    template 'lib/templates/.gitignore', "#{top_dir}/.gitignore"
 
-    if yes?('Would you like to host your website public on platform like Heroku? (y/n):', :blue)
-      configs[:site_name] = ask('Provide the hostname for your website (e.g. http://myblog.herokuapp.com OR http://www.myblog.com) :', :green)
-    end
-    template 'lib/templates/single-app-config.ru', 'config.ru'
+    template 'lib/templates/single-app-config.ru', "#{top_dir}/config.ru"
 
     if configs[:blog]
-      while yes?('Would you like to add blog post? (y/n):', :blue)
-        post(configs[:name])
+      while yes?('Would you like to add blog post? (y/n):', :cyan)
+        post(configs[:name], top_dir)
       end
     end
 
 
-    create_file "data/#{name}/_config.yml", YAML.dump(JSON.parse(configs.to_json))
+    create_file "#{top_dir}/data/#{name}/_config.yml", YAML.dump(JSON.parse(configs.to_json))
   end
 
   desc 'post <name>', 'create new post for given application name'
-  def post(name)
+  def post(name, top_dir = '.')
     configs[:name] = name
     configs[:title] = ask('Title for the new post? (20 to 30 char) :', :green)
     sanitize_title = configs[:title].gsub(' ','-').gsub('\'','').gsub(',','').downcase   #TODO: proper sanitization
@@ -73,9 +77,9 @@ class SoupCMSCLI < Thor
     tags = ask('Tags as comma separated list:', :green)
     configs[:tags] = tags.split(',')
 
-    template 'lib/templates/blog/my-first-post.md',"data/#{name}/posts/#{sanitize_title}.md"
-    copy_file 'lib/templates/public/blog/posts/images/my-first-post.png',"public/#{name}/posts/images/#{sanitize_title}.png"
-    copy_file 'lib/templates/public/blog/posts/images/my-first-post/1-post-image.png',"public/#{name}/posts/images/#{sanitize_title}/1-post-image.png"
+    template 'lib/templates/blog/my-first-post.md',"#{top_dir}/data/#{name}/posts/#{sanitize_title}.md"
+    copy_file 'lib/templates/public/blog/posts/images/my-first-post.png',"#{top_dir}/public/#{name}/posts/images/#{sanitize_title}.png"
+    copy_file 'lib/templates/public/blog/posts/images/my-first-post/1-post-image.png',"#{top_dir}/public/#{name}/posts/images/#{sanitize_title}/1-post-image.png"
   end
 
   desc 'delete <name>', 'delete application'
