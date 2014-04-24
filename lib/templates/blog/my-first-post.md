@@ -4,9 +4,10 @@ tags: [<%= configs[:tags].join(",") %>]
 title: <%= configs[:title] %>
 publish_datetime: 2014-01-01T00:00:07.0Z
 description: Write post description here...
+#slug: change-it-to-your-own-slug-for-the-post   # default slug is sanitized file name
 ---
 
-# Markdown documentation
+## Markdown documentation
 
 This is [markdown template](http://kramdown.gettalong.org/index.html) and quick reference of the markdown language is available [here](http://kramdown.gettalong.org/quickref.html).
 
