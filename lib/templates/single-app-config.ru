@@ -6,7 +6,7 @@ require 'soupcms/api'
 
 SoupCMS::Common::Strategy::Application::SingleApp.configure do |app|
   app.app_name = "<%= configs[:name] %>"
-  app.display_name = "<%= configs[:description] %>"
+  app.display_name = "<%= configs[:display_name] %>"
   <%- if configs[:site_name] %>
   if ENV['RACK_ENV'] == 'production'
     app.soupcms_api_url = '<%= configs[:site_name] %>/api'

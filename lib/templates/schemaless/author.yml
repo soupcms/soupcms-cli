@@ -1,0 +1,10 @@
+---
+  doc_id: author
+
+  name: <%= configs[:name] %>
+  bio: Author short bio like twitter
+  thumbnail: http://www.gravatar.com/avatar/f40c60ffb60255ae89e75ccbb8eb303c.png
+  email: <%= configs[:name] %>@email.com
+  twitter_handle: <%= configs[:name] %>
+  github_username: <%= configs[:name] %>
+

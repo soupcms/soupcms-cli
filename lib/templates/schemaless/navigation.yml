@@ -1,8 +1,8 @@
 ---
-  name: navigation
+  doc_id: navigation
 
   logo:
-    font_icon: fa fa-magic
+    font_icon: fa fa-home
     text: "<%= configs[:display_name] %>"
     link:
       url: home

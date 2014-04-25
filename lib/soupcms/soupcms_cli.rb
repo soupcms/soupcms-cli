@@ -42,11 +42,12 @@ class SoupCMSCLI < Thor
       template 'lib/templates/pages/posts.yml',"#{data_folder}/pages/posts.yml"
     end
     copy_file 'lib/templates/public/favicon.png', "#{top_dir}/public/favicon.png"
+    copy_file 'lib/templates/public/favicon.ico', "#{top_dir}/public/favicon.ico"
     copy_file 'lib/templates/public/common/stylesheets/_custom-variables.scss', "#{top_dir}/public/common/stylesheets/_custom-variables.scss"
 
     template 'lib/templates/schemaless/footer.yml',"#{data_folder}/schemaless/footer.yml"
     template 'lib/templates/schemaless/navigation.yml',"#{data_folder}/schemaless/navigation.yml"
-    template 'lib/templates/schemaless/social-toolbar.yml',"#{data_folder}/schemaless/social-toolbar.yml"
+    template 'lib/templates/schemaless/author.yml',"#{data_folder}/schemaless/author.yml"
 
     template 'lib/templates/pages/default.yml',"#{data_folder}/pages/default.yml"
     template 'lib/templates/pages/home.yml',"#{data_folder}/pages/home.yml"
@@ -63,7 +64,6 @@ class SoupCMSCLI < Thor
         post(configs[:name], top_dir)
       end
     end
-
 
     create_file "#{top_dir}/data/#{name}/_config.yml", YAML.dump(JSON.parse(configs.to_json))
   end

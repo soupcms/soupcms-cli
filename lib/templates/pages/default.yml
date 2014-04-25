@@ -21,7 +21,7 @@
               type: soupcms-api
               model: schemaless
               match:
-                name: navigation
+                doc_id: navigation
               return: navigation
           template:
             type: slim
@@ -44,11 +44,11 @@
           recipes:
             -
               type: http
-              url: "#{context.application.soupcms_api_url}/schemaless/name/social-toolbar"
-              return: social-toolbar
+              url: "#{context.application.soupcms_api_url}/schemaless/doc_id/author"
+              return: author
           template:
             type: slim
-            name: bootstrap/social-toolbar
+            name: bootstrap/author
         -
           recipes:
             -
@@ -67,7 +67,7 @@
               type: soupcms-api
               model: schemaless
               match:
-                name: footer
+                doc_id: footer
               return: footer
           template:
             type: slim
