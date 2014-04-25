@@ -45,7 +45,7 @@ module SoupCMS
 
         def conn
           return @conn if @conn
-          mongo_uri = ENV["MONGODB_URI_#{app_name}"] || "mongodb://localhost:27017/#{app_name}"
+          mongo_uri = ENV["MONGODB_URI_#{app_name}"] || ENV["MONGOLAB_URI"] || "mongodb://localhost:27017/#{app_name}"
           @conn = Mongo::MongoClient.from_uri(mongo_uri)
         end
 
