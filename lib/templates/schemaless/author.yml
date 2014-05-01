@@ -2,7 +2,11 @@
   doc_id: author
 
   name: <%= configs[:name] %>
-  bio: Author short bio like twitter
+  bio:
+    - Author short bio like twitter line 1
+    - bio line 2
+    - as many lines as you want
+    - fully optional
   thumbnail: http://www.gravatar.com/avatar/f40c60ffb60255ae89e75ccbb8eb303c.png
   email: <%= configs[:name] %>@email.com
   twitter_handle: <%= configs[:name] %>
