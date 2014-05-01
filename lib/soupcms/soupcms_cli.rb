@@ -72,7 +72,7 @@ class SoupCMSCLI < Thor
   def post(name, top_dir = '.')
     configs[:name] = name
     configs[:title] = ask('Title for the new post? (20 to 30 char) :', :green)
-    sanitize_title = configs[:title].gsub(' ','-').gsub('\'','').gsub(',','').downcase   #TODO: proper sanitization
+    sanitize_title = sanatize(configs[:title])
     configs[:sanitize_title] = sanitize_title
     tags = ask('Tags as comma separated list:', :green)
     configs[:tags] = tags.split(',')
@@ -127,6 +127,11 @@ class SoupCMSCLI < Thor
 
   def self.source_root
     File.join(File.dirname(__FILE__), '../..')
+  end
+
+  private
+  def sanatize(value)
+    value.gsub(/\W/, '-').gsub('--','-').downcase
   end
 
 
