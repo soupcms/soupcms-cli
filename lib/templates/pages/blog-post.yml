@@ -54,7 +54,7 @@
               fields: 
                 - title
                 - slug
-              limit: 5
+              limit: 0
               return: articles
           template: 
             type: slim
