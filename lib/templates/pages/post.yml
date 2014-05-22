@@ -5,16 +5,10 @@
     - 
       name: sidebar
       modules: 
-        - 
-          recipes: 
-            - 
-              type: http
-              url: "#{context.application.soupcms_api_url}/schemaless/doc_id/author"
-              return: author
-          template:
-            type: slim
-            name: bootstrap/author
-        - 
+        - author
+        - projects
+        - share-this
+        -
           recipes: 
             - 
               type: soupcms-api
@@ -37,15 +31,7 @@
             name: bootstrap/table-of-content
             config: 
               title: Contents
-        - 
-          recipes: 
-            - 
-              type: soupcms-api
-              url: posts/tag-cloud
-              return: tag-cloud
-          template: 
-            type: slim
-            name: bootstrap/tag-cloud
+        - tag-cloud
         - 
           recipes: 
             - 

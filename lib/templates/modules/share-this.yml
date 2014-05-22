@@ -1,0 +1,13 @@
+---
+  doc_id: share-this
+
+  recipes:
+    -
+      type: soupcms-api
+      model: "/#{context.model_name}/slug/#{context.slug}"
+      return: article
+  template:
+    type: slim
+    name: bootstrap/share-this
+    config:
+      title: Share

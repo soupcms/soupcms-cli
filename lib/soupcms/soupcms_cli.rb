@@ -38,7 +38,7 @@ class SoupCMSCLI < Thor
     top_dir = options.skip_dir? ? '.' : name
     data_folder = "#{top_dir}/data/#{name}"
     if configs[:blog]
-      template 'lib/templates/pages/blog-post.yml',"#{data_folder}/pages/blog-post.yml"
+      template 'lib/templates/pages/post.yml',"#{data_folder}/pages/post.yml"
       template 'lib/templates/pages/posts.yml',"#{data_folder}/pages/posts.yml"
     end
     copy_file 'lib/templates/public/favicon.png', "#{top_dir}/public/favicon.png"
@@ -48,6 +48,12 @@ class SoupCMSCLI < Thor
     template 'lib/templates/schemaless/footer.yml',"#{data_folder}/schemaless/footer.yml"
     template 'lib/templates/schemaless/navigation.yml',"#{data_folder}/schemaless/navigation.yml"
     template 'lib/templates/schemaless/author.yml',"#{data_folder}/schemaless/author.yml"
+
+    template 'lib/templates/modules/author.yml',"#{data_folder}/modules/author.yml"
+    template 'lib/templates/modules/navigation.yml',"#{data_folder}/modules/navigation.yml"
+    template 'lib/templates/modules/projects.yml',"#{data_folder}/modules/projects.yml"
+    template 'lib/templates/modules/tag-cloud.yml',"#{data_folder}/modules/tag-cloud.yml"
+    template 'lib/templates/modules/share-this.yml',"#{data_folder}/modules/share-this.yml"
 
     template 'lib/templates/pages/default.yml',"#{data_folder}/pages/default.yml"
     template 'lib/templates/pages/home.yml',"#{data_folder}/pages/home.yml"

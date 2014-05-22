@@ -1,0 +1,11 @@
+---
+  doc_id: author
+
+  recipes:
+    -
+      type: http
+      url: "#{context.application.soupcms_api_url}/schemaless/doc_id/author"
+      return: author
+  template:
+    type: slim
+    name: bootstrap/author

@@ -48,8 +48,11 @@ map '/' do
     config.application_strategy = SoupCMS::Common::Strategy::Application::SingleApp
   end
   soup_cms_rack_app = SoupCMSRackApp.new
+  soup_cms_rack_app.set_redirect('http://localhost:9292','http://localhost:9292/home')
+  soup_cms_rack_app.set_redirect('http://localhost:9292/','http://localhost:9292/home')
   <%- if configs[:site_name] %>
   soup_cms_rack_app.set_redirect('<%= configs[:site_name] %>','<%= configs[:site_name] %>/home')
+  soup_cms_rack_app.set_redirect('<%= configs[:site_name] %>/','<%= configs[:site_name] %>/home')
   <%- end %>
   run soup_cms_rack_app
 end

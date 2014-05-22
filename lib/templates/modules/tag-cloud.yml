@@ -1,0 +1,11 @@
+---
+  doc_id: tag-cloud
+
+  recipes:
+    -
+      type: soupcms-api
+      url: posts/tag-cloud
+      return: tag-cloud
+  template:
+    type: slim
+    name: bootstrap/tag-cloud

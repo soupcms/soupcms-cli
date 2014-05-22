@@ -2,9 +2,9 @@
 # blog post attributes in front matter format
 tags: [<%= configs[:tags].join(",") %>]
 title: <%= configs[:title] %>
-publish_datetime: 2014-01-01T00:00:07.0Z
+publish_datetime: 2014-01-01T00:00:07.0Z            # change date in future for draft article
 description: Write post description here...
-#slug: change-it-to-your-own-slug-for-the-post   # default slug is sanitized file name
+#slug: change-it-to-define-slug-for-the-post        # default slug is sanitized file name
 ---
 
 ## Markdown documentation

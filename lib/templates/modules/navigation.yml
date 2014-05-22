@@ -1,0 +1,13 @@
+---
+  doc_id: navigation
+
+  recipes:
+    -
+      type: soupcms-api
+      model: schemaless
+      match:
+        doc_id: navigation
+      return: navigation
+  template:
+    type: slim
+    name: bootstrap/navigation

@@ -1,0 +1,14 @@
+---
+  doc_id: projects
+
+  recipes:
+    -
+      type: http
+      url: "#{context.application.soupcms_api_url}/schemaless/doc_id/author"
+      get: "result['projects']"
+      return: articles
+  template:
+    type: slim
+    name: bootstrap/list-view
+    config:
+      title: My Projects
