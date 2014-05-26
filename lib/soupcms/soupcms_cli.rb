@@ -43,6 +43,7 @@ class SoupCMSCLI < Thor
     end
     copy_file 'lib/templates/public/favicon.png', "#{top_dir}/public/favicon.png"
     copy_file 'lib/templates/public/favicon.ico', "#{top_dir}/public/favicon.ico"
+    copy_file 'lib/templates/public/logo.svg', "#{top_dir}/public/logo.svg"
     copy_file 'lib/templates/public/common/stylesheets/_custom-variables.scss', "#{top_dir}/public/common/stylesheets/_custom-variables.scss"
 
     template 'lib/templates/schemaless/footer.yml',"#{data_folder}/schemaless/footer.yml"

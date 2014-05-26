@@ -2,7 +2,8 @@
   doc_id: navigation
 
   logo:
-    font_icon: fa fa-home
+    image:
+      url: "/assets/logo.svg"
     text: "<%= configs[:display_name] %>"
     link:
       url: home
@@ -12,14 +13,15 @@
     <% if configs[:blog] %>
     left:
       -
-        label: Latest posts
+        label: "&nbsp;Latest posts"
         link:
           url: posts
+        font_icon: fa fa-comment-o fa-fw
     <% end %>
 
     right:
       -
-        label: About
+        label: "&nbsp;About"
         link:
           url: about
         font_icon: fa fa-user
