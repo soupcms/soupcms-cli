@@ -28,6 +28,8 @@ module SoupCMS
                 else
                   SoupCMS::CLI::Model::Markdown.new(file).create
               end
+            when 'svg', 'png', 'jpeg', 'jpg'
+              SoupCMS::CLI::Model::Image.new(file).create
           end
         end
 

@@ -119,7 +119,7 @@ class SoupCMSCLI < Thor
   def seed(name)
     clean(name) if options.clean?
     ENV['verbose'] = options.verbose?.to_s
-    Dir.glob("data/#{name}/**/*.{json,md,yml}").each do |file|
+    Dir.glob("data/#{name}/**/*.{json,md,yml,svg,png,jpg,jpeg}").each do |file|
       unless file.include?('ref_files') || file.include?('_config.yml')
         begin
           SoupCMS::CLI::Model::Base.create_model(File.new(file))

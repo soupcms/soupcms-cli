@@ -21,5 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('thor', '~> 0.19')
   spec.add_runtime_dependency('mongo', '~> 1.10')
   spec.add_runtime_dependency('bson_ext', '~> 1.10')
+  spec.add_runtime_dependency('cloudinary', '~> 1.0')
 
 end
