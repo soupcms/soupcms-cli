@@ -29,7 +29,15 @@ module SoupCMS
                   SoupCMS::CLI::Model::Markdown.new(file).create
               end
             when 'svg', 'png', 'jpeg', 'jpg'
-              SoupCMS::CLI::Model::Image.new(file).create
+              image_name = File.basename(file).split('.')[1]
+              case image_name
+                when 'mobile'
+                  SoupCMS::CLI::Model::MobileImage.new(file).create
+                when 'tablet'
+                  SoupCMS::CLI::Model::TabletImage.new(file).create
+                else
+                  SoupCMS::CLI::Model::Image.new(file).create
+              end
           end
         end
 
@@ -37,7 +45,7 @@ module SoupCMS
         def initialize(file);
           @file = file;
           @logger = Logger.new(STDOUT)
-          @logger.level = ENV['verbose'] == 'true' ? Logger::DEBUG : Logger::INFO
+          @logger.level = $global_log_level || (ENV['verbose'] == 'true' ? Logger::DEBUG : Logger::INFO)
           @logger.formatter = proc do |severity, datetime, progname, msg|
             "#{severity}: #{msg}\n".colorize(SEVERITY_COLOR_MAP[severity] || :red)
           end
