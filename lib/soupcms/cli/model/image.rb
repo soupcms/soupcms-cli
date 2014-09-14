@@ -54,7 +54,7 @@ module SoupCMS
 
 
         def upload
-          @logger.info "Uploading image '#{doc_id}' to folder '#{app_name}'"
+          @logger.info "Uploading image '#{doc_id}'"
           return coll.find({image_for_md5 => md5}).to_a[0]['desktop'] if coll.find({image_for_md5 => md5}).count > 0
 
           return "v#{@timestamp}/#{md5}.#{type}" if ENV['image_upload'] == 'false'
