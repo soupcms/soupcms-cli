@@ -88,9 +88,10 @@ module SoupCMS
         end
 
         def hero_image
-          image_path = File.join('public', app_name, model, "images/#{doc_name}.*")
-          hero_image = Dir.glob(image_path).to_a
-          return File.join('/assets', app_name, model, 'images', File.basename(hero_image[0])) unless hero_image.empty?
+          Dir.glob("#{File.dirname(@file)}/**/#{doc_name}.{svg,png,jpg,jpeg}").each do |image_file|
+            return "ref:images:#{SoupCMS::CLI::Model::Image.new(File.new(image_file)).doc_id}"
+          end
+          return nil
         end
 
         def doc;
@@ -126,7 +127,7 @@ module SoupCMS
           doc['latest'] = true unless doc['latest']
 
           doc['slug'] = slug unless doc['slug']
-          doc['hero_image'] = {'url' => hero_image} if hero_image
+          doc['hero_image'] = hero_image if hero_image
         end
 
         def publish_in_future?

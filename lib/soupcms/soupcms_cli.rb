@@ -121,6 +121,7 @@ class SoupCMSCLI < Thor
     clean(name) if options.clean?
     ENV['verbose'] = options.verbose?.to_s
     ENV['image_upload'] = options.image_upload?.to_s
+    say 'Ignoring image uploads to Cloudinary', :magenta if ENV['image_upload'] == 'false'
     Dir.glob("data/#{name}/**/*.{json,md,yml,svg,png,jpg,jpeg}").each do |file|
       unless file.include?('ref_files') || file.include?('_config.yml')
         begin
