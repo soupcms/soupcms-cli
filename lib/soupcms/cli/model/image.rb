@@ -27,15 +27,15 @@ module SoupCMS
           return if exists?
 
           @doc = coll.find({'doc_id' => doc_id}).to_a[0] || {}
-          timestamp = file.mtime.to_i
+          @timestamp = file.mtime.to_i
           @doc.merge!({
                           'source' => 'cloudinary',
                           'doc_id' => doc_id,
                           'locale' => 'en_US',
-                          'publish_datetime' => timestamp,
-                          'version' => timestamp,
-                          'update_datetime' => timestamp,
-                          'create_datetime' => timestamp,
+                          'publish_datetime' => @timestamp,
+                          'version' => @timestamp,
+                          'update_datetime' => @timestamp,
+                          'create_datetime' => @timestamp,
                           'create_by' => 'seed',
                           'state' => 'published',
                           'latest' => true
@@ -56,6 +56,8 @@ module SoupCMS
         def upload
           @logger.info "Uploading image '#{doc_id}' to folder '#{app_name}'"
           return coll.find({image_for_md5 => md5}).to_a[0]['desktop'] if coll.find({image_for_md5 => md5}).count > 0
+
+          return "v#{@timestamp}/#{md5}.#{type}" if ENV['image_upload'] == 'false'
 
           @logger.info "Using cloudinary configs: #{ENV['CLOUDINARY_CLOUD_NAME']},#{ENV['CLOUDINARY_API_KEY']},#{ENV['CLOUDINARY_API_SECRET']}"
           Cloudinary.config do |config|

@@ -116,9 +116,11 @@ class SoupCMSCLI < Thor
   desc 'seed <name>', 'seed content to database'
   method_option :clean, type: :boolean, aliases: '-c', default: false, desc: 'Clean all documents before seed.'
   method_option :verbose, type: :boolean, aliases: '-v', default: false, desc: 'Show verbose information during seed (debug level logs).'
+  method_option :image_upload, type: :boolean, aliases: '-i', default: true, desc: 'Upload images to cloud service cloudinary.com'
   def seed(name)
     clean(name) if options.clean?
     ENV['verbose'] = options.verbose?.to_s
+    ENV['image_upload'] = options.image_upload?.to_s
     Dir.glob("data/#{name}/**/*.{json,md,yml,svg,png,jpg,jpeg}").each do |file|
       unless file.include?('ref_files') || file.include?('_config.yml')
         begin
