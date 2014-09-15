@@ -54,19 +54,24 @@ module SoupCMS
 
 
         def upload
-          @logger.info "Uploading image '#{doc_id}'"
           return coll.find({image_for_md5 => md5}).to_a[0]['desktop'] if coll.find({image_for_md5 => md5}).count > 0
 
           return "v#{@timestamp}/#{md5}.#{type}" if ENV['image_upload'] == 'false'
 
-          @logger.info "Using cloudinary configs: #{ENV['CLOUDINARY_CLOUD_NAME']},#{ENV['CLOUDINARY_API_KEY']},#{ENV['CLOUDINARY_API_SECRET']}"
+          @logger.debug "Using cloudinary configs: #{ENV['CLOUDINARY_CLOUD_NAME']},#{ENV['CLOUDINARY_API_KEY']},#{ENV['CLOUDINARY_API_SECRET']}"
           Cloudinary.config do |config|
             config.cloud_name = ENV['CLOUDINARY_CLOUD_NAME']
             config.api_key = ENV['CLOUDINARY_API_KEY']
             config.api_secret = ENV['CLOUDINARY_API_SECRET']
           end
 
-          response = Cloudinary::Uploader.upload(@file, public_id: image_public_name)
+          begin
+            response = Cloudinary::Api.resource(image_public_name)
+            @logger.info "Reusing uploaded image '#{doc_id}'"
+          rescue Cloudinary::Api::NotFound => cloudinary_not_found_exception
+            @logger.info "Uploading image '#{doc_id}'"
+            response = Cloudinary::Uploader.upload(@file, public_id: image_public_name)
+          end
           "v#{response['version']}/#{response['public_id']}.#{response['format']}"
         end
 
