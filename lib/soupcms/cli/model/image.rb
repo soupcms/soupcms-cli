@@ -56,7 +56,7 @@ module SoupCMS
         def upload
           return coll.find({image_for_md5 => md5}).to_a[0]['desktop'] if coll.find({image_for_md5 => md5}).count > 0
 
-          return "v#{@timestamp}/#{md5}.#{type}" if ENV['image_upload'] == 'false'
+          return "v12345/#{md5}.#{type}" if ENV['image_upload'] == 'false'
 
           @logger.debug "Using cloudinary configs: #{ENV['CLOUDINARY_CLOUD_NAME']},#{ENV['CLOUDINARY_API_KEY']},#{ENV['CLOUDINARY_API_SECRET']}"
           Cloudinary.config do |config|

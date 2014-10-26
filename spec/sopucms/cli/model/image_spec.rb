@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+ENV['image_upload'] = 'false'
+
 describe SoupCMS::CLI::Model::Image do
 
   let (:db) { Mongo::MongoClient.new('localhost', 27017).db('soupcms-cli-test') }
@@ -61,11 +63,11 @@ describe SoupCMS::CLI::Model::Image do
     SoupCMS::CLI::Model::TabletImage.new(tablet_image_file).create
 
     doc = coll.find({'doc_id' => 'posts/structured-logging/splunk-query.png'}).to_a[0]
-    expect(doc['desktop']).to eq('v12345/dummy.png')
+    expect(doc['desktop']).to eq('v12345/fccc4aacf0af0993f7d70662e45e76e4.png')
     expect(doc['desktopMD5']).to eq('fccc4aacf0af0993f7d70662e45e76e4')
-    expect(doc['mobile']).to eq('v12345/dummy.png')
+    expect(doc['mobile']).to eq('v12345/fd19e0daf8b6d2770c718acb63328de4.png')
     expect(doc['mobileMD5']).to eq('fd19e0daf8b6d2770c718acb63328de4')
-    expect(doc['tablet']).to eq('v12345/dummy.png')
+    expect(doc['tablet']).to eq('v12345/cdfc2281bb0512482b01225776109c6a.png')
     expect(doc['tabletMD5']).to eq('cdfc2281bb0512482b01225776109c6a')
   end
 
