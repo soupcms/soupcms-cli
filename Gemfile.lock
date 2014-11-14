@@ -14,7 +14,7 @@ GEM
     bson (1.11.1)
     bson_ext (1.11.1)
       bson (~> 1.11.1)
-    cloudinary (1.0.77)
+    cloudinary (1.0.78)
       aws_cf_signer
       rest-client
     diff-lcs (1.2.5)
