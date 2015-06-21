@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SoupCMS::CLI::Model::Post do
 
-  let (:db) { Mongo::MongoClient.new('localhost', 27017).db('soupcms-cli-test') }
+  let (:db) { Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'soupcms-cli-test').database }
   let (:coll) { db.collection('posts') }
   let (:post_file) { File.new('spec/soupcms-cli-test/posts/structured-logging/structured-logging.md') }
 

@@ -56,7 +56,7 @@ module SoupCMS
         def conn
           return @conn if @conn
           mongo_uri = ENV["MONGODB_URI_#{app_name}"] || ENV["MONGOLAB_URI"] || "mongodb://localhost:27017/#{app_name}"
-          @conn = Mongo::MongoClient.from_uri(mongo_uri)
+          @conn = Mongo::Client.new(mongo_uri)
         end
 
         def doc_name;
@@ -80,7 +80,7 @@ module SoupCMS
         end
 
         def db;
-          conn.db
+          conn.database
         end
 
         def coll;
@@ -108,7 +108,7 @@ module SoupCMS
         end
 
         def update_old_doc
-          coll.update({'_id' => old_doc['_id']}, {'$set' => {'latest' => false, 'state' => 'published_archive'}}) unless old_doc.empty?
+          coll.find({'_id' => old_doc['_id']}).update_one({'$set' => {'latest' => false, 'state' => 'published_archive'}}) unless old_doc.empty?
         end
 
         def build
@@ -141,10 +141,9 @@ module SoupCMS
           else
             @logger.info "Inserting document '#{file.path}'"
             @logger.debug "\n #{JSON.pretty_generate(doc)}"
-            coll.insert(doc)
+            coll.insert_one(doc)
             update_old_doc
           end
-          conn.close
         end
 
 

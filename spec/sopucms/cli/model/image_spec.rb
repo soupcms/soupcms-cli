@@ -4,7 +4,7 @@ ENV['image_upload'] = 'false'
 
 describe SoupCMS::CLI::Model::Image do
 
-  let (:db) { Mongo::MongoClient.new('localhost', 27017).db('soupcms-cli-test') }
+  let (:db) { Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'soupcms-cli-test').database }
   let (:coll) { db.collection('images') }
 
 
@@ -73,7 +73,7 @@ describe SoupCMS::CLI::Model::Image do
 
   it 'should not update or upload image again if already present' do
     doc = {'doc_id' => 'posts/structured-logging/splunk-query.png', 'desktop' => 'v12345/dummy.png', 'desktopMD5' => 'fccc4aacf0af0993f7d70662e45e76e4','version' => 1}
-    coll.insert(doc)
+    coll.insert_one(doc)
 
     image_file = File.new('spec/soupcms-cli-test/posts/structured-logging/splunk-query.png')
     SoupCMS::CLI::Model::Image.new(image_file).create

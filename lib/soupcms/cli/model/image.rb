@@ -43,8 +43,7 @@ module SoupCMS
 
           @doc[image_for] = upload
           @doc[image_for_md5] = md5
-          @doc['_id'] ? coll.update({'_id' => @doc['_id']},@doc) : coll.insert(@doc)
-          conn.close
+          @doc['_id'] ? coll.find({'_id' => @doc['_id']}).update_one(@doc) : coll.insert_one(@doc)
         end
 
 

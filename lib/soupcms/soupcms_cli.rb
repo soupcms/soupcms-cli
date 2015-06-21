@@ -4,6 +4,8 @@ require 'yaml'
 require 'json'
 require 'mongo'
 
+Mongo::Logger.logger.level = Logger::INFO
+
 class SoupCMSCLI < Thor
   include Thor::Actions
 
@@ -102,15 +104,14 @@ class SoupCMSCLI < Thor
   desc 'clean <name>', 'clean all content from database'
   def clean(name)
     mongo_uri = ENV["MONGODB_URI_#{name}"] || "mongodb://localhost:27017/#{name}"
-    conn = Mongo::MongoClient.from_uri(mongo_uri)
-    db = conn.db
+    conn = Mongo::Client.new(mongo_uri)
+    db = conn.database
     say "Cleaning up the database '#{name}'", :green
     db.collection_names.each { |coll_name|
       next if coll_name.match(/^system/)
       say "Dropping collection '#{coll_name}'", :red
-      db.drop_collection(coll_name)
+      db[coll_name].drop
     }
-    conn.close
   end
 
   desc 'seed <name>', 'seed content to database'
